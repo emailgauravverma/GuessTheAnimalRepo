@@ -1,0 +1,25 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <Animal>
+    <ID>1</ID>
+    <Name>Lion</Name>
+    <WayOfSpeak>Roars</WayOfSpeak>
+    <HasTail>Yes</HasTail>
+    <Colour>Yellow</Colour>
+  </Animal>
+  <Animal>
+    <ID>2</ID>
+    <Name>Dog</Name>
+    <WayOfSpeak>Barks</WayOfSpeak>
+    <HasTail>Yes</HasTail>
+    <Colour>Black</Colour>
+  </Animal>
+  <Animal>
+    <ID>3</ID>
+    <Name>Bird</Name>
+    <WayOfSpeak>Tweets</WayOfSpeak>
+    <HasTail>No</HasTail>
+    <Colour>While</Colour>
+  </Animal>
+  <Animal />
+</NewDataSet>

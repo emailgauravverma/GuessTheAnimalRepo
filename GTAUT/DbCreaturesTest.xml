@@ -1,0 +1,10 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <Animals>
+    <ID>4</ID>
+    <Name>Cat</Name>
+    <WayOfSpeak>Mio</WayOfSpeak>
+    <HasTail>false</HasTail>
+    <Colour>White</Colour>
+  </Animals>
+</NewDataSet>
