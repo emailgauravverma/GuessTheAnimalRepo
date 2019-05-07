@@ -73,16 +73,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GuessTheAnimalFun.cs">
+    <Compile Include="GuessTheAnimal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GuessTheAnimalFun.Designer.cs">
-      <DependentUpon>GuessTheAnimalFun.cs</DependentUpon>
+    <Compile Include="GuessTheAnimal.Designer.cs">
+      <DependentUpon>GuessTheAnimal.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="GuessTheAnimalFun.resx">
-      <DependentUpon>GuessTheAnimalFun.cs</DependentUpon>
+    <EmbeddedResource Include="GuessTheAnimal.resx">
+      <DependentUpon>GuessTheAnimal.cs</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </EmbeddedResource>

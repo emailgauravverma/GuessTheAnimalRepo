@@ -1,6 +1,6 @@
 ﻿namespace GuessTheAnimal
 {
-    partial class GuessTheAnimalFun
+    partial class GuessTheAnimal
     {
         /// <summary>
         /// Required designer variable.
@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GuessTheAnimalFun));
             this.btnUpdate = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblAnimal = new System.Windows.Forms.Label();
             this.btnAnimalFullFeatures = new System.Windows.Forms.Button();
             this.cmbAnimalColor = new System.Windows.Forms.ComboBox();
             this.tabQuestions = new System.Windows.Forms.TabPage();
+            this.btnGoBack = new System.Windows.Forms.Button();
             this.cmbAnimalHasTail = new System.Windows.Forms.ComboBox();
             this.cmbAnimalWaySpeaks = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -43,12 +43,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabList = new System.Windows.Forms.TabControl();
             this.tabAnimalsList = new System.Windows.Forms.TabPage();
+            this.btnRefresh = new System.Windows.Forms.Button();
             this.dgvAnimalsList = new System.Windows.Forms.DataGridView();
             this.btnStartGuess = new System.Windows.Forms.Button();
             this.lblInfo = new System.Windows.Forms.Label();
             this.dataSet1 = new System.Data.DataSet();
-            this.btnRefresh = new System.Windows.Forms.Button();
-            this.btnGoBack = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabQuestions.SuspendLayout();
             this.tabList.SuspendLayout();
@@ -71,8 +70,7 @@
             // pictureBox1
             // 
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.ErrorImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.ErrorImage")));
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.ErrorImage = null;
             this.pictureBox1.Location = new System.Drawing.Point(349, 74);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(315, 164);
@@ -128,6 +126,16 @@
             this.tabQuestions.UseVisualStyleBackColor = true;
             this.tabQuestions.Enter += new System.EventHandler(this.tabQuestions_Enter);
             // 
+            // btnGoBack
+            // 
+            this.btnGoBack.Location = new System.Drawing.Point(37, 244);
+            this.btnGoBack.Name = "btnGoBack";
+            this.btnGoBack.Size = new System.Drawing.Size(270, 23);
+            this.btnGoBack.TabIndex = 4;
+            this.btnGoBack.Text = "<<<< Go Back";
+            this.btnGoBack.UseVisualStyleBackColor = true;
+            this.btnGoBack.Click += new System.EventHandler(this.btnGoBack_Click);
+            // 
             // cmbAnimalHasTail
             // 
             this.cmbAnimalHasTail.FormattingEnabled = true;
@@ -140,8 +148,6 @@
             // cmbAnimalWaySpeaks
             // 
             this.cmbAnimalWaySpeaks.FormattingEnabled = true;
-            this.cmbAnimalWaySpeaks.Items.AddRange(new object[] {
-            ""});
             this.cmbAnimalWaySpeaks.Location = new System.Drawing.Point(37, 62);
             this.cmbAnimalWaySpeaks.Name = "cmbAnimalWaySpeaks";
             this.cmbAnimalWaySpeaks.Size = new System.Drawing.Size(270, 21);
@@ -210,6 +216,16 @@
             this.tabAnimalsList.Text = "Animals";
             this.tabAnimalsList.UseVisualStyleBackColor = true;
             // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Location = new System.Drawing.Point(221, 34);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(75, 23);
+            this.btnRefresh.TabIndex = 5;
+            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
             // dgvAnimalsList
             // 
             this.dgvAnimalsList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -242,36 +258,16 @@
             // 
             this.dataSet1.DataSetName = "NewDataSet";
             // 
-            // btnRefresh
-            // 
-            this.btnRefresh.Location = new System.Drawing.Point(221, 34);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(75, 23);
-            this.btnRefresh.TabIndex = 5;
-            this.btnRefresh.Text = "Refresh";
-            this.btnRefresh.UseVisualStyleBackColor = true;
-            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
-            // 
-            // btnGoBack
-            // 
-            this.btnGoBack.Location = new System.Drawing.Point(37, 244);
-            this.btnGoBack.Name = "btnGoBack";
-            this.btnGoBack.Size = new System.Drawing.Size(270, 23);
-            this.btnGoBack.TabIndex = 4;
-            this.btnGoBack.Text = "<<<< Go Back";
-            this.btnGoBack.UseVisualStyleBackColor = true;
-            this.btnGoBack.Click += new System.EventHandler(this.btnGoBack_Click);
-            // 
-            // GuessTheAnimalFun
+            // GuessTheAnimal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(811, 384);
             this.Controls.Add(this.tabList);
-            this.Name = "GuessTheAnimalFun";
+            this.Name = "GuessTheAnimal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
-            this.Load += new System.EventHandler(this.GuessTheAnimalFun_Load);
+            this.Text = "Guess The Animal";
+            this.Load += new System.EventHandler(this.GuessTheAnimal_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabQuestions.ResumeLayout(false);
             this.tabQuestions.PerformLayout();

@@ -16,7 +16,7 @@ namespace GuessTheAnimal
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new GuessTheAnimalFun());
+            Application.Run(new GuessTheAnimal());
         }
     }
 }

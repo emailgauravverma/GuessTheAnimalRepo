@@ -13,6 +13,11 @@ namespace DatabaseLayer
         DataSet dsCreatures;
         DataTable dtAnimalList;
 
+        /// <summary>
+        /// Read data from the XML File and pass it back to the calling layer as DataTable
+        /// </summary>
+        /// <param name="database"></param>
+        /// <returns>datatable</returns>
         public DataTable ReadXML(string database)
         {
             if (File.Exists(database))
@@ -24,6 +29,11 @@ namespace DatabaseLayer
             return dtAnimalList;
         } 
 
+        /// <summary>
+        /// Updates the database/XML
+        /// </summary>
+        /// <param name="dsUpdated"></param>
+        /// <param name="database"></param>
         public void UpdateDatabase(DataSet dsUpdated, string database)
         {
             dsUpdated.WriteXml(database, System.Data.XmlWriteMode.IgnoreSchema);

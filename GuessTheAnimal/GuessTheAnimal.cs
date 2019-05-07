@@ -12,23 +12,32 @@ using System.Configuration;
 
 namespace GuessTheAnimal
 {
-    public partial class GuessTheAnimalFun : Form
+    /// <summary>
+    /// This class represents all the operations related to Add/Edit/Delete/Udpate for Animal
+    /// </summary>
+    public partial class GuessTheAnimal : Form
     {
+        #region Variables
         DataSet dsCreatures;
         DataTable dtAnimalList;
         string database = string.Empty;
         bool animalsFullFeatures = false; 
         BusinessLayer.BusinessLayerOperations BLLayer = null;
+        #endregion
 
-        public GuessTheAnimalFun()
+        #region Constructor
+        public GuessTheAnimal()
         {
             InitializeComponent();
          
             if(ConfigurationManager.ConnectionStrings["DatabaseLocation"] != null)
                 database = ConfigurationManager.ConnectionStrings["DatabaseLocation"].ToString();
-        }
 
-        private void GuessTheAnimalFun_Load(object sender, EventArgs e)
+        }
+        #endregion
+
+        #region Load Operations
+        private void GuessTheAnimal_Load(object sender, EventArgs e)
         {
             BindGrid(animalsFullFeatures);
         }
@@ -38,6 +47,7 @@ namespace GuessTheAnimal
             BLLayer = new BusinessLayerOperations();
             dtAnimalList = BLLayer.ReadXML(database);
             dgvAnimalsList.DataSource = dtAnimalList;
+
             dgvAnimalsList.Columns[0].Visible = ShowFullFeatures;
             dgvAnimalsList.Columns[2].Visible = ShowFullFeatures;
             dgvAnimalsList.Columns[3].Visible = ShowFullFeatures;
@@ -46,25 +56,31 @@ namespace GuessTheAnimal
 
         //Load the combo boxes with values from Database
         private void LoadComboBoxes()
-        {            
-            cmbAnimalWaySpeaks.BindingContext = this.BindingContext;
-            cmbAnimalWaySpeaks.DataSource = dtAnimalList.DefaultView;
-            cmbAnimalWaySpeaks.DisplayMember = "WayOfSpeak";
-           
+        {
+            if (dtAnimalList != null && dtAnimalList.Rows.Count > 0)
+            {
+                cmbAnimalWaySpeaks.BindingContext = this.BindingContext;
+                cmbAnimalWaySpeaks.DataSource = dtAnimalList.DefaultView;
+                cmbAnimalWaySpeaks.DisplayMember = "WayOfSpeak";
+                cmbAnimalWaySpeaks.Text = "Select the Way Your Animal Speaks";
 
-            cmbAnimalHasTail.BindingContext = new BindingContext();
-            cmbAnimalHasTail.Items.Add("Yes");
-            cmbAnimalHasTail.Items.Add("No");
-            cmbAnimalHasTail.SelectedIndex = 0;
+                cmbAnimalHasTail.BindingContext = new BindingContext();
+                if (!cmbAnimalHasTail.Items.Contains("YES")) { cmbAnimalHasTail.Items.Add("YES"); }
+                if (!cmbAnimalHasTail.Items.Contains("NO")) { cmbAnimalHasTail.Items.Add("NO"); }
+                //cmbAnimalHasTail.SelectedIndex = 0;
+                cmbAnimalHasTail.Text = "Select Animal Has Tail Or Not";
 
 
-            cmbAnimalColor.BindingContext = new BindingContext();
-            cmbAnimalColor.DataSource = dtAnimalList.DefaultView;
-            cmbAnimalColor.DisplayMember = "Colour";
+                cmbAnimalColor.BindingContext = new BindingContext();
+                cmbAnimalColor.DataSource = dtAnimalList.DefaultView;
+                cmbAnimalColor.DisplayMember = "Colour";
+                cmbAnimalColor.Text = "Select Colour Of Your Animal";
+            }
         }
 
         private void tabQuestions_Enter(object sender, EventArgs e)
         {
+            //tabList.SelectTab("tabQuestions");
             LoadComboBoxes();
         }
 
@@ -92,13 +108,15 @@ namespace GuessTheAnimal
             }
             catch (Exception)
             {
-
                 throw;
             }
            
            
         }
 
+        #endregion
+
+        #region Combobox SelectionChanged Events
         private void cmbAnimalWaySpeaks_SelectedIndexChanged(object sender, EventArgs e)
         {
             DisplayLable(FindAnimal());
@@ -113,13 +131,13 @@ namespace GuessTheAnimal
         {
             DisplayLable(FindAnimal());
         }
+        #endregion 
 
-        private void DisplayLable(string identifiedAnimal)
-        {
-            pictureBox1.Hide();
-            lblAnimal.Text = identifiedAnimal;
-        }
-
+        #region Search Animal Based On Selction Criteria
+        /// <summary>
+        /// Search the Animal on the basis of the Selection Criteria
+        /// </summary>
+        /// <returns>Name of Animal</returns>
         private string FindAnimal()
         {
             var FeatureOneAnimalWayOfSpeak = cmbAnimalWaySpeaks.Text;
@@ -136,6 +154,68 @@ namespace GuessTheAnimal
                 return "No Match Found !!";
         }
 
+
+        private void DisplayLable(string identifiedAnimal)
+        {
+            pictureBox1.Hide();
+            lblAnimal.Text = identifiedAnimal;
+        }
+
+        #endregion
+
+        #region Update Animal List to Database
+
+        #region Edit The Animal Grid
+        /// <summary>
+        /// Update The Animal Grid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgvAnimalsList_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            //Get the ID Column Value
+            string idColumnVal = dgvAnimalsList.Rows[e.RowIndex].Cells["ID"].Value.ToString();
+
+            //Get the Animal Name Column Value
+            string nameColumnVal = dgvAnimalsList.Rows[e.RowIndex].Cells["Name"].Value.ToString();
+
+
+            //Validate the ID should only be Integer Type
+            if (!string.IsNullOrEmpty(idColumnVal) && !ValidateIntegerValue(idColumnVal))
+            {
+                MessageBox.Show("The entered ID  " + idColumnVal + "  need to be an Integer Only");
+
+                return;
+            }
+
+            //Validate Duplicate ID
+            if (!string.IsNullOrEmpty(idColumnVal) && IsDuplicateId(idColumnVal))
+            {
+                MessageBox.Show("The entered ID  " + idColumnVal + " already exists");
+
+                dgvAnimalsList.Rows[e.RowIndex].Cells["ID"].Selected = true;
+
+                return;
+            }
+
+            //Validate Duplicate Animal name
+            if (!string.IsNullOrEmpty(nameColumnVal) && IsDuplicateAnimal(nameColumnVal))
+            {
+                MessageBox.Show("The entered Animal " + nameColumnVal + " already exists");
+
+                dgvAnimalsList.Rows[e.RowIndex].Cells["Name"].Selected = true;
+
+                return;
+            }
+        }
+        #endregion
+
+        #region Update Animal List
+        /// <summary>
+        /// Update the Animal List to database
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             try
@@ -160,55 +240,29 @@ namespace GuessTheAnimal
         {
             BindGrid(animalsFullFeatures);
         }
+        #endregion
 
+        #endregion
+
+        #region Guess The Animal/Go Back GUI
         private void btnStartGuess_Click(object sender, EventArgs e)
         {
             tabList.SelectTab("tabQuestions");
+            LoadComboBoxes();
         }
 
         private void btnGoBack_Click(object sender, EventArgs e)
         {
             tabList.SelectTab("tabAnimalsList");
         }
+        #endregion
 
-        private void dgvAnimalsList_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            //Get the ID Column Value
-            string idColumnVal = dgvAnimalsList.Rows[e.RowIndex].Cells["ID"].Value.ToString();
-            
-            //Get the Animal Name Column Value
-            string nameColumnVal = dgvAnimalsList.Rows[e.RowIndex].Cells["Name"].Value.ToString();
-
-
-            //Validate the ID should only be Integer Type
-            if (!string.IsNullOrEmpty(idColumnVal) && !ValidateIntegerValue(idColumnVal))
-            {
-                MessageBox.Show("The entered ID  "+ idColumnVal + "  need to be an Integer Only");
-                                
-                return;
-            }
-
-            //Validate Duplicate ID
-            if (!string.IsNullOrEmpty(idColumnVal) && IsDuplicateId(idColumnVal))
-            {
-                MessageBox.Show("The entered ID  " + idColumnVal + " already exists");
-               
-                dgvAnimalsList.Rows[e.RowIndex].Cells["ID"].Selected = true;
-
-                return;
-            }
-
-            //Validate Duplicate Animal name
-            if (!string.IsNullOrEmpty(nameColumnVal) && IsDuplicateAnimal(nameColumnVal))
-            {
-                MessageBox.Show("The entered Animal " + nameColumnVal + " already exists");
-                
-                dgvAnimalsList.Rows[e.RowIndex].Cells["Name"].Selected = true;
-                
-                return;            
-            }
-        }
-
+        #region Validations
+        /// <summary>
+        /// Validation for Integer Value
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>bool</returns>
         private bool ValidateIntegerValue(string id)
         {
             bool isValidInteger = false;
@@ -219,7 +273,12 @@ namespace GuessTheAnimal
             }
             return isValidInteger;
         }
-
+       
+        /// <summary>
+        /// Validation for Duplicate ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>bool</returns>
         private bool IsDuplicateId(string id)
         {
             var row = dtAnimalList.Select("ID = " + id + "");
@@ -227,11 +286,17 @@ namespace GuessTheAnimal
             return row.Count() > 0;
         }
 
+        /// <summary>
+        /// Validation for Duplicate Name of Animal
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns>bool</returns>
         private bool IsDuplicateAnimal(string name)
         { 
             var row = dtAnimalList.Select("Name = '"+ name +"' ");
 
             return row.Count() > 0;
-        } 
+        }
+        #endregion
     }
 }
